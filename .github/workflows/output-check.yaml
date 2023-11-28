@@ -1,0 +1,21 @@
+name: Use last minute outputs
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+    example-job:
+      runs-on: ubuntu-latest
+      
+      steps:
+      - name: Step 1
+        run: echo "Hello, world!" > output.txt
+        
+      - name: Step 2
+        run: |
+          # Read the contents of the output file
+          OUTPUT_CONTENT=$(cat output.txt)
+          
+          # Use the contents as an argument for the next command
+          echo "The output from the previous step was: $OUTPUT_CONTENT"
