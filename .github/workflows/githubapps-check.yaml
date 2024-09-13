@@ -1,0 +1,22 @@
+name: GitHub Apps Check
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+    example-job:
+      runs-on: ubuntu-latest
+      
+      steps:
+        - name: Generate token
+          id: generate-token
+          uses: actions/create-github-app-token@v1
+          with:
+            app-id: ${{ vars.APP_ID }}
+            private-key: ${{ secrets.APP_PEM }}
+        - name: Use API
+          env:
+            GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+          run: |
+            gh api https://api.github.com/repos/design-strategy-unit/avex-portal-frontend-2023-image/issues
